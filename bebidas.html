@@ -1,0 +1,33 @@
+<!doctype html>
+<html lang="pt-PT">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#123c2b">
+  <title>Bebidas — SOLTREM</title>
+  <link rel="stylesheet" href="styles.css">
+  <script src="menu.js" defer></script>
+</head>
+<body>
+  <main class="menu-page bebidas-page">
+    <nav class="menu-nav" aria-label="Navegação do menu">
+      <a class="back" href="index.html">← Início</a>
+      <a href="comidas.html">Comidas</a>
+      <a href="bebidas.html" aria-current="page">Bebidas</a>
+    </nav>
+    <div class="page-heading">
+      <h1>Bebidas</h1>
+      <div class="menu-tools">
+        <button id="menu-zoom" type="button" aria-controls="menu-image" aria-pressed="false" hidden>Ampliar menu</button>
+        <a href="assets/bebidas.png">Abrir imagem original</a>
+      </div>
+    </div>
+    <p class="menu-zoom-hint" id="menu-zoom-hint" hidden>Desliza para os lados para veres o menu ampliado.</p>
+    <figure class="menu-image" id="menu-image" aria-label="Menu de bebidas">
+      <img src="assets/bebidas.png" width="1055" height="1491" alt="Menu de bebidas do SOLTREM com cafetaria, cervejas, aguardentes, whiskys, licores, bebidas variadas e respetivos preços.">
+    </figure>
+    <div class="page-switch"><a href="comidas.html">Ver menu de Comidas <span aria-hidden="true">→</span></a></div>
+  </main>
+  <footer><span>SOLTREM</span><span>Snack-Bar Restaurante</span></footer>
+</body>
+</html>
