@@ -3,31 +3,23 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="theme-color" content="#123c2b">
-  <title>Comidas — SOLTREM</title>
+  <meta name="theme-color" content="#17362a">
+  <meta name="description" content="Menus de comidas e bebidas do Snack-Bar Restaurante SOLTREM, no Funchal.">
+  <title>Comidas | SOLTREM</title>
   <link rel="stylesheet" href="styles.css">
+  <link rel="stylesheet" href="viewer.css">
   <script src="menu.js" defer></script>
 </head>
 <body>
-  <main class="menu-page comidas-page">
-    <nav class="menu-nav" aria-label="Navegação do menu">
-      <a class="back" href="index.html">← Início</a>
+  <main class="wrap standalone">
+    <nav class="menu-nav" aria-label="Menus">
+      <a href="index.html">← Início</a>
       <a href="comidas.html" aria-current="page">Comidas</a>
       <a href="bebidas.html">Bebidas</a>
     </nav>
-    <div class="page-heading">
-      <h1>Comidas</h1>
-      <div class="menu-tools">
-        <button id="menu-zoom" type="button" aria-controls="menu-image" aria-pressed="false" hidden>Ampliar menu</button>
-        <a href="assets/comidas.png">Abrir imagem original</a>
-      </div>
-    </div>
-    <p class="menu-zoom-hint" id="menu-zoom-hint" hidden>Desliza para os lados para veres o menu ampliado.</p>
-    <figure class="menu-image" id="menu-image" aria-label="Menu de comidas">
-      <img src="assets/comidas.png" width="1491" height="1055" alt="Menu de comidas do SOLTREM com sandes, pregos, torradas e tostas, e respetivos preços.">
-    </figure>
-    <div class="page-switch"><a href="bebidas.html">Ver menu de Bebidas <span aria-hidden="true">→</span></a></div>
+    <h1>Comidas</h1>
+    <a class="enlarge" href="assets/comidas.png" data-menu="Comidas">Ampliar menu <svg aria-hidden="true" viewBox="0 0 24 24"><path d="M5 12h13m-5-5 5 5-5 5"/></svg></a>
+    <img class="standalone-sheet" src="assets/comidas.png" alt="Menu de comidas do SOLTREM" width="1491" height="1055">
   </main>
-  <footer><span>SOLTREM</span><span>Snack-Bar Restaurante</span></footer>
 </body>
 </html>

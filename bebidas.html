@@ -3,31 +3,23 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="theme-color" content="#123c2b">
-  <title>Bebidas — SOLTREM</title>
+  <meta name="theme-color" content="#17362a">
+  <meta name="description" content="Menus de comidas e bebidas do Snack-Bar Restaurante SOLTREM, no Funchal.">
+  <title>Bebidas | SOLTREM</title>
   <link rel="stylesheet" href="styles.css">
+  <link rel="stylesheet" href="viewer.css">
   <script src="menu.js" defer></script>
 </head>
 <body>
-  <main class="menu-page bebidas-page">
-    <nav class="menu-nav" aria-label="Navegação do menu">
-      <a class="back" href="index.html">← Início</a>
+  <main class="wrap standalone">
+    <nav class="menu-nav" aria-label="Menus">
+      <a href="index.html">← Início</a>
       <a href="comidas.html">Comidas</a>
       <a href="bebidas.html" aria-current="page">Bebidas</a>
     </nav>
-    <div class="page-heading">
-      <h1>Bebidas</h1>
-      <div class="menu-tools">
-        <button id="menu-zoom" type="button" aria-controls="menu-image" aria-pressed="false" hidden>Ampliar menu</button>
-        <a href="assets/bebidas.png">Abrir imagem original</a>
-      </div>
-    </div>
-    <p class="menu-zoom-hint" id="menu-zoom-hint" hidden>Desliza para os lados para veres o menu ampliado.</p>
-    <figure class="menu-image" id="menu-image" aria-label="Menu de bebidas">
-      <img src="assets/bebidas.png" width="1055" height="1491" alt="Menu de bebidas do SOLTREM com cafetaria, cervejas, aguardentes, whiskys, licores, bebidas variadas e respetivos preços.">
-    </figure>
-    <div class="page-switch"><a href="comidas.html">Ver menu de Comidas <span aria-hidden="true">→</span></a></div>
+    <h1>Bebidas</h1>
+    <a class="enlarge" href="assets/bebidas.png" data-menu="Bebidas">Ampliar menu <svg aria-hidden="true" viewBox="0 0 24 24"><path d="M5 12h13m-5-5 5 5-5 5"/></svg></a>
+    <img class="standalone-sheet" src="assets/bebidas.png" alt="Menu de bebidas do SOLTREM" width="1199" height="1312">
   </main>
-  <footer><span>SOLTREM</span><span>Snack-Bar Restaurante</span></footer>
 </body>
 </html>

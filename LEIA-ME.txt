@@ -1,12 +1,9 @@
-SOLTREM — publicar com GitHub Pages
+SOLTREM
 
-O site estático está pronto. Mantém index.html, comidas.html, bebidas.html e styles.css na raiz do repositório, e preserva a pasta assets com os dois menus.
+Extrai o ZIP e abre index.html num navegador para rever o site.
+Para o commit, copia estes ficheiros para a pasta que o teu GitHub Pages já publica. Mantém a pasta assets junto do index.html.
 
-1. No GitHub, cria um repositório chamado soltrem-menu. Com o plano gratuito, o repositório tem de ser público para usar GitHub Pages.
-2. Extrai o ZIP e carrega o conteúdo da pasta soltrem-site para a raiz do repositório. Não carregues a pasta exterior como uma subpasta.
-3. No repositório, abre Settings > Pages.
-4. Em Build and deployment, escolhe Deploy from a branch; seleciona main e /(root), e guarda.
-5. Quando o GitHub Pages indicar que o site está publicado, copia o endereço que aparece nessa página.
-6. Gera um único QR Code com esse endereço.
+O QR deve abrir a página inicial no endereço público do teu GitHub Pages. Antes de imprimir, abre esse endereço num telemóvel e confirma que ambos os menus abrem.
 
-O site tem navegação entre Comidas e Bebidas e usa os ficheiros PNG originais dos menus.
+Bebidas usa a imagem 3 e Comidas usa a imagem 4. Os PNG estão incluídos com a resolução original. A página inicial usa miniaturas para carregar mais depressa.
+
