@@ -1,31 +1,35 @@
-# SOLTREM — Site de menus v5 (mobile-first)
+# SOLTREM — v15 (Pagamentos + Wi-Fi)
 
-Site estático para clientes que leem o QR Code nas mesas do SOLTREM.
+- Secção de pagamentos redesenhada: cartão Revolut destacado e MB WAY / SPIN em cartões individuais, sem bordas pesadas; layouts específicos para mobile e desktop.
+- Ícone Wi-Fi revisto e integrado numa medalha verde, com palavra-passe e ação de copiar intactas.
+- Menus, imagens, QR, preços e contactos mantidos a partir da v14.
+- Para abrir: extrair o ZIP e abrir `index.html`.
 
-## Como testar (sem fazer commit)
+# SOLTREM — Website mobile-first
 
-1. Extrai o ZIP inteiro para uma pasta.
-2. Abre `index.html` no Chrome ou noutro navegador.
-3. Testa **Comidas** e **Bebidas**, os botões de troca dentro do visualizador, o zoom `+` / `−`, o gesto de pinça, o botão **Fechar** e o voltar à página inicial.
-4. No Chrome podes testar o aspeto de telemóvel com `F12` → barra de dispositivos. Para testar gestos de toque a sério, abre num telemóvel.
+Página estática sem instalação, sem npm e sem dependências externas. Uma única entrada pelo QR Code abre o `index.html`.
 
-Não precisas de instalar dependências ou iniciar um servidor. Os menus estão na pasta `assets/`.
+## Visualização
 
-## Depois de aprovares
+Extrai o ZIP inteiro. Abre `index.html` no Chrome. As pastas e ficheiros `assets/`, `styles.css`, `viewer.css`, `site.js`, `menu.js`, `comidas.html` e `bebidas.html` devem ficar todos juntos.
 
-Copia estes ficheiros e a pasta `assets` para a raiz do repositório que o GitHub Pages publica. Só depois faz commit. O QR Code deve apontar para o URL público da página inicial `index.html`.
+## Conteúdo
 
-## O que mudou face à v4
+- Fotografias reais do bar a preto e branco e panorâmica histórica feita das fotografias fornecidas.
+- Dois cartões para o menu (Comidas e Bebidas), com as imagens completas em resolução elevada; abre o menu e amplia com dois dedos ou botões.
+- Wi-Fi: palavra-passe e botão copiar.
+- Revolut: QR e ligação direta `https://revolut.me/marcocorreia73`.
+- MB WAY e SPIN: número 965 342 288, com opção de copiar. Confirma a associação do número às contas correspondentes.
+- Morada abre Maps e os contactos usam `tel:`.
 
-- Os dois menus são o foco da página e aparecem logo no ecrã do telemóvel.
-- Logótipo original, apenas uma vez, sem sobreposição sobre as fotografias.
-- Paleta consistente: creme, verde floresta e detalhes dourados.
-- Fotografias reais do espaço em preto e branco, sem imagens de catálogo.
-- Visualizador em ecrã completo no telemóvel, com botões grandes e alinhados, alternância direta entre Comidas/Bebidas e zoom por pinça ou botões.
-- Os dois cartazes aprovados são mantidos como imagens, sem qualquer alteração aos preços.
-- Acessibilidade: links funcionam sem JavaScript, Escape fecha o visualizador, foco visível e respeito por `prefers-reduced-motion`.
-- Sem frameworks, dependências externas, anúncios ou análises.
+## Publicação
+
+Envia todo o conteúdo desta pasta para a raiz do repositório GitHub Pages (não apenas o `index.html`). Não é preciso fazer commit antes de veres se gostas. O QR Code do cliente deve apontar para o endereço público do site, não para o endereço local `file://`.
 
 ## Nota
 
-O horário é o indicado na conversa: segunda a sexta 07:30–20:30, sábado 07:30–15:00, domingo encerrado. Confirma antes de publicar.
+O botão Revolut abre o endereço configurado; a confirmação do pagamento é sempre externa ao site. Os logos MB WAY e SPIN são versões SVG simplificadas, sem fundos opacos; antes do uso final, considera usar os ficheiros oficiais das marcas.
+
+## Versão 13 — Sombras
+
+Refinadas as sombras de menus, Wi-Fi, pagamentos, contactos, botões e diálogos. Foram removidas as sombras duras douradas que pareciam segundas bordas. Nenhum texto, preço, imagem, link ou comportamento foi alterado.
