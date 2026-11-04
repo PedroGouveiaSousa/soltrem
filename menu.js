@@ -1,115 +1,157 @@
+/* SOLTREM v5 — menu viewer for touch screens. No dependencies; links work without JS. */
 (() => {
-  const viewer = document.createElement('dialog');
-  if (typeof viewer.showModal !== 'function') return;
+  if (typeof HTMLDialogElement === 'undefined' || !HTMLDialogElement.prototype.showModal) return;
 
-  viewer.className = 'menu-viewer';
-  viewer.setAttribute('aria-labelledby', 'menu-viewer-title');
-  viewer.innerHTML = `
-    <header class="menu-viewer-header">
-      <h2 id="menu-viewer-title"></h2>
-      <button type="button" class="menu-viewer-close" autofocus>Fechar <span aria-hidden="true">×</span></button>
+  const menus = {
+    comidas: { title: 'Comidas', image: 'assets/comidas.jpg' },
+    bebidas: { title: 'Bebidas', image: 'assets/bebidas.jpg' },
+  };
+
+  const dialog = document.createElement('dialog');
+  dialog.className = 'menu-viewer';
+  dialog.setAttribute('aria-labelledby', 'viewer-title');
+  dialog.innerHTML = `
+    <header class="viewer-top">
+      <div class="viewer-brand"><small>SOLTREM · A NOSSA CARTA</small><h2 id="viewer-title">Comidas</h2></div>
+      <button class="viewer-close" type="button" aria-label="Fechar menu">Fechar <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 6l12 12M18 6 6 18"/></svg></button>
     </header>
-    <div class="menu-viewer-toolbar" aria-label="Ampliação do menu">
-      <a class="menu-viewer-switch" data-menu></a>
-      <div class="menu-viewer-controls">
-        <button type="button" data-zoom="out" aria-label="Diminuir menu">−</button>
-        <button type="button" data-zoom="reset" aria-label="Voltar ao tamanho inicial" title="Ajustar à largura">100%</button>
-        <button type="button" data-zoom="in" aria-label="Ampliar menu">+</button>
-      </div>
+    <nav class="viewer-tabs" aria-label="Alternar entre menus">
+      <button class="viewer-tab" type="button" data-view="comidas" aria-pressed="true">Comidas</button>
+      <button class="viewer-tab" type="button" data-view="bebidas" aria-pressed="false">Bebidas</button>
+    </nav>
+    <div class="viewer-canvas" role="region" aria-label="Menu com zoom e deslocação" tabindex="0">
+      <p class="viewer-loading" role="status">A carregar menu…</p>
+      <img alt="" draggable="false" hidden>
+      <p class="viewer-error" hidden>Não foi possível carregar a imagem do menu. <a href="">Abrir a imagem diretamente</a></p>
     </div>
-    <div class="menu-viewer-stage" role="region" aria-label="Imagem do menu" tabindex="0">
-      <img class="menu-viewer-image" alt="">
-      <p class="menu-viewer-error" hidden>Não foi possível carregar o menu. <a>Abrir a imagem</a></p>
-    </div>`;
-  document.body.append(viewer);
+    <footer class="viewer-bottom">
+      <div class="viewer-tip"><span>Usa dois dedos para ampliar</span><a class="viewer-original" href="" target="_blank" rel="noopener noreferrer">Abrir imagem ↗</a></div>
+      <div class="viewer-zoom" role="group" aria-label="Ampliação">
+        <button type="button" data-action="out" aria-label="Diminuir zoom">−</button>
+        <button type="button" data-action="reset" aria-label="Repor zoom">100%</button>
+        <button type="button" data-action="in" aria-label="Aumentar zoom">+</button>
+      </div>
+    </footer>`;
+  document.body.append(dialog);
 
-  const title = viewer.querySelector('h2');
-  const closeButton = viewer.querySelector('.menu-viewer-close');
-  const stage = viewer.querySelector('.menu-viewer-stage');
-  const image = viewer.querySelector('.menu-viewer-image');
-  const errorMessage = viewer.querySelector('.menu-viewer-error');
-  const imageLink = errorMessage.querySelector('a');
-  const switchLink = viewer.querySelector('.menu-viewer-switch');
-  const zoomOut = viewer.querySelector('[data-zoom="out"]');
-  const zoomReset = viewer.querySelector('[data-zoom="reset"]');
-  const zoomIn = viewer.querySelector('[data-zoom="in"]');
-  const minZoom = 100;
-  const maxZoom = 400;
-  const zoomStep = 20;
-  let zoom = minZoom;
-  let trigger;
+  const select = (sel) => dialog.querySelector(sel);
+  const canvas = select('.viewer-canvas');
+  const image = select('.viewer-canvas img');
+  const loading = select('.viewer-loading');
+  const error = select('.viewer-error');
+  const reset = select('[data-action="reset"]');
+  const zoomIn = select('[data-action="in"]');
+  const zoomOut = select('[data-action="out"]');
+  const originals = [select('.viewer-original'), select('.viewer-error a')];
+  const close = select('.viewer-close');
+  const tabs = Array.from(dialog.querySelectorAll('[data-view]'));
 
-  function setZoom(level, keepPosition = true) {
-    const next = Math.min(Math.max(level, minZoom), maxZoom);
-    if (keepPosition && next === zoom) return;
+  let zoom = 100;
+  let startingFingerGap = 0;
+  let startingZoom = 100;
+  let lastTrigger = null;
+  let activeMenu = 'comidas';
 
-    const width = image.offsetWidth;
-    const height = image.offsetHeight;
-    const centerX = (stage.scrollLeft + stage.clientWidth / 2) / (width || 1);
-    const centerY = (stage.scrollTop + Math.min(stage.clientHeight, height) / 2) / (height || 1);
+  const clamp = (value, min, max) => Math.max(min, Math.min(max, value));
+  const distance = (a, b) => Math.hypot(a.clientX - b.clientX, a.clientY - b.clientY);
 
-    zoom = next;
-    image.style.setProperty('--menu-viewer-width', `${zoom}%`);
-    zoomReset.textContent = `${zoom}%`;
-    zoomReset.setAttribute('aria-label', `${zoom}%. Ajustar à largura`);
-    zoomOut.setAttribute('aria-disabled', String(zoom === minZoom));
-    zoomIn.setAttribute('aria-disabled', String(zoom === maxZoom));
+  function setZoom(value, focusX, focusY) {
+    const rect = canvas.getBoundingClientRect();
+    const localX = focusX === undefined ? rect.width / 2 : focusX - rect.left;
+    const localY = focusY === undefined ? rect.height / 2 : focusY - rect.top;
+    const prevWidth = image.offsetWidth || rect.width || 1;
+    const prevHeight = image.offsetHeight || rect.height || 1;
+    const imageX = (canvas.scrollLeft + localX) / prevWidth;
+    const imageY = (canvas.scrollTop + localY) / prevHeight;
+    zoom = Math.round(clamp(value, 100, 450));
+    image.style.setProperty('--image-scale', `${zoom}%`);
+    reset.textContent = `${zoom}%`;
+    zoomOut.disabled = zoom <= 100;
+    zoomIn.disabled = zoom >= 450;
+    canvas.scrollLeft = imageX * image.offsetWidth - localX;
+    canvas.scrollTop = imageY * image.offsetHeight - localY;
+  }
 
-    stage.scrollLeft = keepPosition ? centerX * image.offsetWidth - stage.clientWidth / 2 : 0;
-    stage.scrollTop = keepPosition ? centerY * image.offsetHeight - stage.clientHeight / 2 : 0;
+  function showMenu(key, opener) {
+    const menu = menus[key];
+    if (!menu) return;
+    if (!dialog.open) {
+      lastTrigger = opener || document.activeElement;
+      dialog.showModal();
+    }
+    activeMenu = key;
+    select('#viewer-title').textContent = menu.title;
+    tabs.forEach((button) => button.setAttribute('aria-pressed', String(button.dataset.view === key)));
+    originals.forEach((link) => { link.href = menu.image; });
+    loading.hidden = false;
+    error.hidden = true;
+    image.hidden = true;
+    image.alt = `Tabela de preços de ${menu.title.toLowerCase()} do SOLTREM`;
+    image.removeAttribute('src');
+    image.src = menu.image;
+    zoom = 100;
+    image.style.setProperty('--image-scale', '100%');
+    reset.textContent = '100%';
+    zoomOut.disabled = true;
+    zoomIn.disabled = false;
+    canvas.scrollLeft = 0;
+    canvas.scrollTop = 0;
+    startingFingerGap = 0;
+    close.focus({ preventScroll: true });
   }
 
   document.addEventListener('click', (event) => {
-    const link = event.target.closest('a[data-menu][href]');
-    if (!link || (viewer.open && link !== switchLink) || event.defaultPrevented || event.button !== 0 ||
-        event.metaKey || event.ctrlKey || event.altKey || event.shiftKey) return;
-
-    const menu = link.dataset.menu;
-    const source = link.dataset.menuImage || link.href;
-    const nextMenu = menu === 'Comidas' ? 'Bebidas' : 'Comidas';
-    const nextSlug = nextMenu.toLowerCase();
-
-    if (!viewer.open) trigger = link;
-    title.textContent = menu;
-    image.alt = `Menu de ${menu.toLocaleLowerCase('pt-PT')} do SOLTREM`;
-    imageLink.href = source;
-    switchLink.href = `${nextSlug}.html`;
-    switchLink.dataset.menu = nextMenu;
-    switchLink.dataset.menuImage = `assets/${nextSlug}.png`;
-    switchLink.textContent = `Ver ${nextMenu} →`;
-    errorMessage.hidden = true;
-    image.hidden = false;
-    image.src = source;
-    if (!viewer.open) viewer.showModal();
-    else closeButton.focus({ preventScroll: true });
-    setZoom(minZoom, false);
+    const anchor = event.target.closest('a[data-menu]');
+    if (!anchor || event.defaultPrevented || event.button !== 0 || event.ctrlKey || event.metaKey || event.altKey || event.shiftKey) return;
+    if (!menus[anchor.dataset.menu]) return;
     event.preventDefault();
+    showMenu(anchor.dataset.menu, anchor);
   });
 
-  closeButton.addEventListener('click', () => viewer.close());
-  viewer.addEventListener('close', () => {
-    image.removeAttribute('src');
-    trigger?.focus({ preventScroll: true });
+  image.addEventListener('load', () => {
+    loading.hidden = true;
+    error.hidden = true;
+    image.hidden = false;
   });
-
   image.addEventListener('error', () => {
-    if (!viewer.open) return;
+    loading.hidden = true;
     image.hidden = true;
-    errorMessage.hidden = false;
+    error.hidden = false;
   });
+  tabs.forEach((button) => button.addEventListener('click', () => {
+    if (button.dataset.view !== activeMenu) showMenu(button.dataset.view);
+  }));
+  close.addEventListener('click', () => dialog.close());
+  dialog.addEventListener('close', () => {
+    image.removeAttribute('src');
+    lastTrigger?.focus?.({ preventScroll: true });
+    lastTrigger = null;
+  });
+  dialog.addEventListener('click', (event) => { if (event.target === dialog) dialog.close(); });
+  zoomOut.addEventListener('click', () => setZoom(zoom - 25));
+  zoomIn.addEventListener('click', () => setZoom(zoom + 25));
+  reset.addEventListener('click', () => { setZoom(100); canvas.scrollLeft = 0; canvas.scrollTop = 0; });
+  canvas.addEventListener('dblclick', (event) => setZoom(zoom === 100 ? 220 : 100, event.clientX, event.clientY));
 
-  zoomOut.addEventListener('click', () => setZoom(zoom - zoomStep));
-  zoomReset.addEventListener('click', () => setZoom(minZoom, false));
-  zoomIn.addEventListener('click', () => setZoom(zoom + zoomStep));
+  canvas.addEventListener('touchstart', (event) => {
+    if (event.touches.length !== 2) return;
+    startingFingerGap = distance(event.touches[0], event.touches[1]);
+    startingZoom = zoom;
+  }, { passive: true });
 
-  viewer.addEventListener('keydown', (event) => {
-    if (event.ctrlKey || event.metaKey || event.altKey) return;
-    if (event.key === '+' || event.key === '=') {
-      event.preventDefault();
-      setZoom(zoom + zoomStep);
-    } else if (event.key === '-') {
-      event.preventDefault();
-      setZoom(zoom - zoomStep);
-    }
+  canvas.addEventListener('touchmove', (event) => {
+    if (event.touches.length !== 2 || !startingFingerGap) return;
+    event.preventDefault();
+    const x = (event.touches[0].clientX + event.touches[1].clientX) / 2;
+    const y = (event.touches[0].clientY + event.touches[1].clientY) / 2;
+    setZoom(startingZoom * distance(event.touches[0], event.touches[1]) / startingFingerGap, x, y);
+  }, { passive: false });
+  canvas.addEventListener('touchend', (event) => { if (event.touches.length < 2) startingFingerGap = 0; }, { passive: true });
+  canvas.addEventListener('touchcancel', () => { startingFingerGap = 0; }, { passive: true });
+
+  dialog.addEventListener('keydown', (event) => {
+    if (event.altKey || event.ctrlKey || event.metaKey) return;
+    if (event.key === '+' || event.key === '=') { event.preventDefault(); setZoom(zoom + 25); }
+    if (event.key === '-') { event.preventDefault(); setZoom(zoom - 25); }
   });
 })();
