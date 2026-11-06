@@ -1,35 +1,37 @@
-# SOLTREM — v15 (Pagamentos + Wi-Fi)
+# SOLTREM v16 — Atualização da v15 aprovada
 
-- Secção de pagamentos redesenhada: cartão Revolut destacado e MB WAY / SPIN em cartões individuais, sem bordas pesadas; layouts específicos para mobile e desktop.
-- Ícone Wi-Fi revisto e integrado numa medalha verde, com palavra-passe e ação de copiar intactas.
-- Menus, imagens, QR, preços e contactos mantidos a partir da v14.
-- Para abrir: extrair o ZIP e abrir `index.html`.
+## O que mudou
+- Comidas: cartaz com «Bolos diversos — 1,60 €».
+- Bebidas: cartaz com «Fazemos Poncha» numa faixa separada, sem preço.
+- «Sandes da Época»: nova secção com o cartaz aprovado, as duas sandes, com o pão da direita inspirado na foto real e os preços Carcaça 3,50 € / Bolo do Caco 4,00 €.
+- Horários: segunda–sexta 07:00–21:00; sábado 07:00–14:00; domingos e feriados encerrado.
+- Pagamentos: aviso «Não temos terminal de pagamento. Não aceitamos cartões, incluindo VISA». Revolut, MB WAY e SPIN mantidos.
+- Nome Marco Correia antes dos números de pagamento e junto dos contactos.
 
-# SOLTREM — Website mobile-first
+## Pré-visualização
+Extrair todos os ficheiros e abrir `index.html` no Chrome. O site funciona sem servidor e sem dependências externas, exceto os links de pagamentos e Maps.
 
-Página estática sem instalação, sem npm e sem dependências externas. Uma única entrada pelo QR Code abre o `index.html`.
+## Notas
+Os links de Revolut e Google Maps são externos; confirmar o destinatário no balcão. A palavra-passe Wi-Fi permanece pública no site, conforme solicitado. Ficheiros `comidas.webp`, `bebidas.webp` e `epoca.webp` mantêm os cartazes em alta resolução.
 
-## Visualização
+## Atualização v17
+- Substituído o cartaz da Sandes da Época pela última imagem aprovada: duas sandes (carcaça e bolo do caco), com o bolo do caco semelhante à fotografia real enviada.
+- Atualizada a fotografia do destaque correspondente na página principal.
+- Corrigido o nome para Marco Correia, conforme indicação do cliente.
+- Restante layout e funcionalidades da v16 preservados.
 
-Extrai o ZIP inteiro. Abre `index.html` no Chrome. As pastas e ficheiros `assets/`, `styles.css`, `viewer.css`, `site.js`, `menu.js`, `comidas.html` e `bebidas.html` devem ficar todos juntos.
 
-## Conteúdo
+## v19 — Ajustes visuais
+- Aviso de pagamento com o desenho verdadeiro do terminal e cartão VISA riscados, recortado da imagem aprovada.
+- Setas dos dois menus substituídas por SVG, com dimensões e alinhamento fixos.
+- Mantidos os restantes conteúdos e funcionalidades da v18.
 
-- Fotografias reais do bar a preto e branco e panorâmica histórica feita das fotografias fornecidas.
-- Dois cartões para o menu (Comidas e Bebidas), com as imagens completas em resolução elevada; abre o menu e amplia com dois dedos ou botões.
-- Wi-Fi: palavra-passe e botão copiar.
-- Revolut: QR e ligação direta `https://revolut.me/marcocorreia73`.
-- MB WAY e SPIN: número 965 342 288, com opção de copiar. Confirma a associação do número às contas correspondentes.
-- Morada abre Maps e os contactos usam `tel:`.
 
-## Publicação
+## v20 — Multibanco
+O aviso de pagamento apresenta a **imagem fornecida do MULTIBANCO riscado**, ao lado de texto legível.
+O QR impresso do menu é independente do site e não foi incluído nem alterado.
+As funcionalidades anteriores (incluindo o QR próprio da Revolut) mantêm-se iguais.
 
-Envia todo o conteúdo desta pasta para a raiz do repositório GitHub Pages (não apenas o `index.html`). Não é preciso fazer commit antes de veres se gostas. O QR Code do cliente deve apontar para o endereço público do site, não para o endereço local `file://`.
 
-## Nota
-
-O botão Revolut abre o endereço configurado; a confirmação do pagamento é sempre externa ao site. Os logos MB WAY e SPIN são versões SVG simplificadas, sem fundos opacos; antes do uso final, considera usar os ficheiros oficiais das marcas.
-
-## Versão 13 — Sombras
-
-Refinadas as sombras de menus, Wi-Fi, pagamentos, contactos, botões e diálogos. Foram removidas as sombras duras douradas que pareciam segundas bordas. Nenhum texto, preço, imagem, link ou comportamento foi alterado.
+## v21 — ordem dos pagamentos
+O aviso «Não temos terminal de pagamento» aparece antes do título «Como preferes pagar?». Sem outras mudanças de design ou funcionalidades.

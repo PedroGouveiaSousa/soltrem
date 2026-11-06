@@ -247,3 +247,122 @@ button{font:inherit;cursor:pointer}
   .pay-number{font-size:15px}.pay-brand-spin{font-size:20px}
 }
 @media(prefers-reduced-motion:reduce){.pay-option,.pay-revolut-button,.pay-copy{transition:none!important}}
+
+/* V16 — Changes based on approved v15. Keep the original visual language. */
+.special-card{display:grid;grid-template-columns:31% 1fr;align-items:stretch;overflow:hidden;position:relative;margin:14px auto 0;min-height:140px;background:linear-gradient(115deg,#073d2b,#005338 65%,#023321);border:2px solid #e9ba4b;border-radius:19px;text-decoration:none;color:#fff9e9;box-shadow:0 5px 13px rgba(15,39,24,.11),0 12px 21px rgba(15,39,24,.09);transition:transform .2s ease,box-shadow .2s ease}
+.special-card:hover{transform:translateY(-2px);box-shadow:0 7px 16px rgba(15,39,24,.16),0 17px 26px rgba(15,39,24,.10)}
+.special-photo{min-width:0;overflow:hidden;position:relative}
+.special-photo img{width:100%;height:100%;object-fit:cover;object-position:50% 50%;position:absolute;inset:0}
+.special-photo::after{content:'';pointer-events:none;position:absolute;inset:0;background:linear-gradient(90deg,transparent 60%,#073d2b 100%)}
+.special-content{display:flex;flex-wrap:wrap;flex-direction:column;align-items:flex-start;justify-content:center;gap:6px;padding:17px 22px}
+.special-eyebrow{text-transform:uppercase;font-size:11px;font-weight:800;letter-spacing:.11em;color:#f1c876}
+.special-content>strong{font-family:var(--serif);font-weight:800;font-size:clamp(22px,3.6vw,37px);line-height:1.1}
+.special-prices{font-size:clamp(12px,1.7vw,17px);line-height:1.45}.special-prices b{color:#f5d077;white-space:nowrap}
+.special-cta{font-weight:800;font-size:12px;color:#003824;background:#ffebbd;border-radius:100px;padding:6px 14px;margin-top:2px}
+.card-warning{display:flex;align-items:center;justify-content:flex-start;gap:14px;margin:0 0 15px;padding:14px 16px;background:linear-gradient(180deg,#fff7ea 0%,#f9ecd8 100%);color:#66452a;border:1px solid #dec395;border-radius:16px;font-size:13px;line-height:1.42;box-shadow:0 6px 16px rgba(54,43,28,.08),0 2px 5px rgba(54,43,28,.04)}
+.card-warning strong{display:block;margin-bottom:2px;color:#74401a;font-size:14px}
+.card-warning-icon{flex:none;display:grid;place-items:center;width:42px;height:42px;border-radius:14px;background:linear-gradient(160deg,#fff,#f3dfc1);border:1px solid #d8b681;box-shadow:0 4px 11px rgba(103,63,22,.12), inset 0 1px 0 rgba(255,255,255,.8)}
+.card-warning-icon svg{width:25px;height:25px;fill:none;stroke:#a44a2d;stroke-width:1.9;stroke-linejoin:round;stroke-linecap:round}
+.card-warning-icon circle{stroke:#c86b47;fill:#fff5ea}
+.card-warning-text{display:block}
+.pay-recipient,.contact-recipient{display:block;font-weight:800;color:#0b583c;font-size:clamp(12px,1.3vw,15px);line-height:1.25}
+.contact-recipient{color:#f2cd7c;font-size:clamp(12px,1.5vw,16px);margin-bottom:5px}
+@media(max-width:700px){
+ .special-card{grid-template-columns:32% 1fr;min-height:108px;margin-top:12px;border-radius:15px}
+ .special-content{padding:12px 11px;gap:5px}
+ .special-eyebrow{font-size:9px;letter-spacing:.06em}
+ .special-content>strong{font-size:clamp(17px,4.9vw,23px)}
+ .special-prices{font-size:11px}
+ .special-cta{font-size:10px;padding:5px 9px}
+ .card-warning{gap:9px;padding:10px 11px;font-size:11px;border-radius:13px;align-items:flex-start}
+ .card-warning strong{font-size:12px}
+ .card-warning-icon{width:34px;height:34px;border-radius:11px}
+ .card-warning-icon svg{width:20px;height:20px}
+ .pay-recipient{font-size:11px}
+ .contact-recipient{font-size:12px}
+ .contact-group p{white-space:normal}
+}
+@media(max-width:355px){.special-card{grid-template-columns:28% 1fr}.special-content{padding:9px 8px}.special-prices{font-size:10px}}
+
+
+/* v19: original payment-terminal illustration (cropped from approved artwork) */
+.card-warning{
+  display:flex;align-items:center;justify-content:flex-start;gap:20px;
+  min-height:112px;margin:0 0 16px;padding:10px 22px;
+  border:1px solid #e5c9a0;border-radius:18px;
+  background:linear-gradient(135deg,#fffaf2 0%,#fbefdf 100%);
+  box-shadow:0 5px 14px rgb(60 42 24 / 6%),0 13px 30px rgb(60 42 24 / 5%);
+}
+.card-warning-illustration{display:block;flex:0 0 auto;width:94px;height:94px;object-fit:contain;mix-blend-mode:multiply}
+.card-warning .card-warning-text{display:flex;flex-direction:column;align-items:flex-start;gap:6px;min-width:0;
+  font-size:clamp(15px,1.65vw,19px);color:#6a4b38;line-height:1.32}
+.card-warning .card-warning-text strong{display:block;font-size:clamp(16px,1.85vw,23px);line-height:1.18;color:#582e1e;margin:0}
+/* v19: menu captions and both arrow buttons have the exact same box, baseline and center */
+.menu-grid{align-items:stretch}
+.menu-card{align-self:stretch}
+.menu-caption{height:36%;min-height:0;grid-template-columns:39px minmax(0,1fr) 66px;gap:14px;align-items:center}
+.menu-icon{justify-self:center;align-self:center}
+.menu-label{align-self:center}
+.circle-arrow{
+ display:grid;place-items:center;justify-self:center;align-self:center;
+ width:clamp(38px,6vw,66px);height:clamp(38px,6vw,66px);
+ flex:0 0 auto;padding:0;border:3px solid var(--gold);
+ border-radius:50%;line-height:1;
+}
+.circle-arrow svg{display:block;width:53%;height:53%;stroke:currentColor;stroke-width:3;
+ stroke-linecap:round;stroke-linejoin:round}
+@media(max-width:700px){
+ .card-warning{gap:11px;min-height:86px;padding:9px 12px;border-radius:14px}
+ .card-warning-illustration{width:63px;height:68px}
+ .card-warning .card-warning-text{font-size:clamp(12px,3.2vw,15px);gap:3px}
+ .card-warning .card-warning-text strong{font-size:clamp(13px,3.5vw,17px)}
+ .menu-caption{height:36%;min-height:0;grid-template-columns:22px minmax(0,1fr) 30px;gap:6px}
+ .circle-arrow{width:30px;height:30px;border-width:2px;padding:0}
+}
+@media(max-width:355px){
+ .card-warning{gap:7px;padding:8px}
+ .card-warning-illustration{width:52px;height:60px}
+ .card-warning .card-warning-text{font-size:11px}
+ .card-warning .card-warning-text strong{font-size:12px}
+ .menu-caption{grid-template-columns:18px minmax(0,1fr) 24px;gap:3px}
+ .circle-arrow{width:24px;height:24px}
+}
+
+/* Desktop uses the actual approved complete artwork; compact mobile adapts its real icon. */
+.card-warning{display:block;min-height:0;padding:0;border:0;border-radius:17px;overflow:hidden;background:transparent;box-shadow:0 6px 18px rgb(60 42 24 / 7%)}
+.card-warning-art{display:block;width:100%;height:auto;aspect-ratio:1322/421;object-fit:contain}
+.card-warning-compact{display:none}
+@media(max-width:700px){
+ .card-warning{display:block;min-height:0;padding:0;background:linear-gradient(135deg,#fffaf2,#fbefdf);border:1px solid #e5c9a0;box-shadow:0 4px 14px rgb(60 42 24 / 7%)}
+ .card-warning-art{display:none}
+ .card-warning-compact{display:flex;align-items:center;gap:10px;padding:10px 12px}
+}
+@media(max-width:355px){.card-warning-compact{gap:6px;padding:8px}}
+
+/* v20 — User-provided MULTIBANCO sign. The menu QR is separate and unchanged. */
+.card-warning{
+  display:flex; align-items:center; justify-content:flex-start; gap:18px;
+  min-height:112px; padding:13px 20px; margin:0 0 15px;
+  border:1px solid #e3c49b; border-radius:17px;
+  background:linear-gradient(125deg,#fffaf3,#faeddb);
+  box-shadow:0 3px 9px rgb(58 38 15 / 5%),0 12px 26px rgb(58 38 15 / 7%);
+  overflow:hidden;
+}
+.card-warning-photo{
+  display:block;flex:0 0 auto;width:90px;height:90px;object-fit:contain;
+  border-radius:9px;background:#fff;box-shadow:0 2px 6px rgb(38 28 21 / 10%);
+}
+.card-warning-message{min-width:0;display:grid;gap:5px;color:#68462f;font-size:clamp(13px,1.7vw,18px);line-height:1.32}
+.card-warning-message strong{display:block;margin:0;color:#63331d;font-size:clamp(15px,2vw,22px);font-weight:800;line-height:1.2}
+@media(max-width:700px){
+ .card-warning{gap:11px;min-height:84px;padding:9px 11px;border-radius:13px}
+ .card-warning-photo{width:65px;height:65px;border-radius:7px}
+ .card-warning-message{font-size:clamp(11px,3vw,14px);gap:3px}
+ .card-warning-message strong{font-size:clamp(12px,3.35vw,16px)}
+}
+@media(max-width:355px){
+ .card-warning{gap:8px;padding:8px}
+ .card-warning-photo{width:54px;height:54px}
+ .card-warning-message{font-size:11px}
+ .card-warning-message strong{font-size:12px}
+}

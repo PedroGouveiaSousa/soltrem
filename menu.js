@@ -3,8 +3,9 @@
   if (typeof HTMLDialogElement === 'undefined' || !HTMLDialogElement.prototype.showModal) return;
 
   const menus = {
-    comidas: { title: 'Comidas', image: 'assets/comidas.jpg' },
-    bebidas: { title: 'Bebidas', image: 'assets/bebidas.jpg' },
+    comidas: { title: 'Comidas', image: 'assets/comidas.webp' },
+    bebidas: { title: 'Bebidas', image: 'assets/bebidas.webp' },
+    epoca: { title: 'Sandes da Época', image: 'assets/epoca.webp' },
   };
 
   const dialog = document.createElement('dialog');
@@ -18,6 +19,7 @@
     <nav class="viewer-tabs" aria-label="Alternar entre menus">
       <button class="viewer-tab" type="button" data-view="comidas" aria-pressed="true">Comidas</button>
       <button class="viewer-tab" type="button" data-view="bebidas" aria-pressed="false">Bebidas</button>
+      <button class="viewer-tab" type="button" data-view="epoca" aria-pressed="false">Sandes da Época</button>
     </nav>
     <div class="viewer-canvas" role="region" aria-label="Menu com zoom e deslocação" tabindex="0">
       <p class="viewer-loading" role="status">A carregar menu…</p>
@@ -86,7 +88,7 @@
     loading.hidden = false;
     error.hidden = true;
     image.hidden = true;
-    image.alt = `Tabela de preços de ${menu.title.toLowerCase()} do SOLTREM`;
+    image.alt = `Cartaz ${menu.title} do SOLTREM`;
     image.removeAttribute('src');
     image.src = menu.image;
     zoom = 100;
